@@ -1,0 +1,28 @@
+info:
+  contact: {}
+  license: {}
+paths:
+  /v1.0/useradd:
+    post:
+      consumes:
+      - application/json
+      description: add user by username and password
+      parameters:
+      - description: Username
+        in: query
+        name: username
+        required: true
+        type: string
+      - description: Password
+        in: query
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: 添加用户
