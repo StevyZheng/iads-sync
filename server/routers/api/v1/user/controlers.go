@@ -2,6 +2,7 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
+	"iads/server/models"
 	"iads/server/pkg/e"
 	"iads/server/pkg/util"
 	"strconv"
@@ -16,7 +17,7 @@ import (
 // @Failure 500
 // @Router /api/v1/tags [post]
 func register(c *gin.Context) {
-	u := &User{}
+	u := &models.User{}
 	if err := c.ShouldBindJSON(u); err != nil {
 		util.RES(c, e.INVALID_PARAMS, gin.H{
 			"message": err.Error(),
@@ -44,7 +45,7 @@ func register(c *gin.Context) {
 
 //列表user数据
 func UserList(c *gin.Context) {
-	var users User
+	var users models.User
 	result, err := users.UserList()
 	if err != nil {
 		util.RES(c, e.ERROR, gin.H{
@@ -67,7 +68,7 @@ func UserList(c *gin.Context) {
 // @Success 200 {string} string	"ok"
 // @Router /v1.0/useradd [post]
 func AddUser(c *gin.Context) {
-	u := &User{}
+	u := &models.User{}
 	if err := c.ShouldBindJSON(u); err != nil {
 		util.RES(c, e.INVALID_PARAMS, gin.H{
 			"message": err.Error(),
@@ -95,7 +96,7 @@ func AddUser(c *gin.Context) {
 
 //修改user数据
 func UpdateUserByID(c *gin.Context) {
-	var user User
+	var user models.User
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	user.Password = c.Request.FormValue("password")
 	_, err = user.UserUpdate(uint(id))
@@ -110,7 +111,7 @@ func UpdateUserByID(c *gin.Context) {
 
 //删除user数据
 func DeleteUserByID(c *gin.Context) {
-	var user User
+	var user models.User
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if id == 0 {
 		util.RES(c, e.INVALID_PARAMS, gin.H{
@@ -131,7 +132,7 @@ func DeleteUserByID(c *gin.Context) {
 
 //列表role数据
 func RoleList(c *gin.Context) {
-	var roles Role
+	var roles models.Role
 	result, err := roles.RoleList()
 	if err != nil {
 		util.RES(c, e.ERROR, gin.H{
@@ -154,7 +155,7 @@ func RoleList(c *gin.Context) {
 // @Success 200 {string} string	"ok"
 // @Router /v1.0/useradd [post]
 func AddRole(c *gin.Context) {
-	r := &Role{}
+	r := &models.Role{}
 	if err := c.ShouldBindJSON(r); err != nil {
 		util.RES(c, e.INVALID_PARAMS, gin.H{
 			"message": err.Error(),
@@ -182,7 +183,7 @@ func AddRole(c *gin.Context) {
 
 //删除role数据
 func DeleteRoleByID(c *gin.Context) {
-	var role Role
+	var role models.Role
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if id == 0 {
 		util.RES(c, e.INVALID_PARAMS, gin.H{
@@ -203,7 +204,7 @@ func DeleteRoleByID(c *gin.Context) {
 
 //修改role数据
 func UpdateRoleByID(c *gin.Context) {
-	var role Role
+	var role models.Role
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	role.Rolename = c.Request.FormValue("rolename")
 	_, err = role.RoleUpdate(uint(id))

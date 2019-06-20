@@ -5,6 +5,8 @@ import (
 	. "fmt"
 	jwt "github.com/appleboy/gin-jwt"
 	"github.com/gin-contrib/sessions"
+	"iads/server/models"
+
 	//"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -30,7 +32,7 @@ func init() {
 		// 登录时调用，可将载荷添加到token中
 		PayloadFunc: func(data interface{}) jwt.MapClaims {
 			Println("调用：PayloadFunc")
-			if v, ok := data.(*User); ok {
+			if v, ok := data.(*models.User); ok {
 				return jwt.MapClaims{
 					identityKey: v.Username,
 				}
@@ -51,7 +53,7 @@ func init() {
 		},
 		// 验证登录
 		Authenticator: func(c *gin.Context) (interface{}, error) {
-			loginval := &Login{}
+			loginval := &models.Login{}
 			if err := c.ShouldBindJSON(&loginval); err != nil {
 				return "", err
 			}
