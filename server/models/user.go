@@ -3,13 +3,13 @@ package models
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
-	"iads/server/pkg/util"
+	. "iads/server/pkg/util"
 )
 
-var dbConnect *util.Connection
+var DBConnect *Connection
 
-func Init() {
-	dbConnect = util.NewConnection()
+func init() {
+	DBConnect = NewConnection()
 }
 
 //用户类
@@ -30,8 +30,8 @@ type Permissions struct {
 }
 
 func CreateTable() {
-	dbConnect.Eloquent.AutoMigrate(&Permissions{}, &Role{}, &User{})
-	dbConnect.Eloquent.Model(&User{}).AddForeignKey("role_id", "roles(id)", "no action", "no action")
+	DBConnect.Eloquent.AutoMigrate(&Permissions{}, &Role{}, &User{})
+	DBConnect.Eloquent.Model(&User{}).AddForeignKey("role_id", "roles(id)", "no action", "no action")
 }
 
 type Login struct {
@@ -42,7 +42,7 @@ type Login struct {
 // Validator .
 func (login *Login) Validator() (*User, string, bool) {
 	user := &User{Username: login.Username}
-	err := dbConnect.Eloquent.Where("username = ?", login.Username).First(&user).Error
+	err := DBConnect.Eloquent.Where("username = ?", login.Username).First(&user).Error
 	fmt.Println(user)
 	var msg string
 	if err != nil {
@@ -60,7 +60,7 @@ func (login *Login) Validator() (*User, string, bool) {
 
 func (user *User) GetOneByUsername(username string) bool {
 	var u User
-	dbConnect.Eloquent.Select("id").Where("username = ?", username).First(&u)
+	DBConnect.Eloquent.Select("id").Where("username = ?", username).First(&u)
 	if u.ID > 0 {
 		return true
 	}
@@ -69,7 +69,7 @@ func (user *User) GetOneByUsername(username string) bool {
 
 //添加user用户
 func (user User) UserAdd() (err error) {
-	ret := dbConnect.Eloquent.Create(&user)
+	ret := DBConnect.Eloquent.Create(&user)
 	if ret.Error != nil {
 		err = ret.Error
 		return
@@ -79,7 +79,7 @@ func (user User) UserAdd() (err error) {
 
 //用户user列表
 func (user *User) UserList() (users []User, err error) {
-	if err = dbConnect.Eloquent.Preload("Role").Find(&users).Error; err != nil {
+	if err = DBConnect.Eloquent.Preload("Role").Find(&users).Error; err != nil {
 		return
 	}
 	return
@@ -87,12 +87,12 @@ func (user *User) UserList() (users []User, err error) {
 
 //修改user
 func (user *User) UserUpdate(id uint) (updateUser User, err error) {
-	if err = dbConnect.Eloquent.Select([]string{"id", "username"}).First(&updateUser, id).Error; err != nil {
+	if err = DBConnect.Eloquent.Select([]string{"id", "username"}).First(&updateUser, id).Error; err != nil {
 		return
 	}
 	//参数1:是要修改的数据
 	//参数2:是修改的数据
-	if err = dbConnect.Eloquent.Model(&updateUser).Update(&user).Error; err != nil {
+	if err = DBConnect.Eloquent.Model(&updateUser).Update(&user).Error; err != nil {
 		return
 	}
 	return
@@ -100,10 +100,10 @@ func (user *User) UserUpdate(id uint) (updateUser User, err error) {
 
 //删除user数据
 func (user *User) UserDestroy(id uint) (Result User, err error) {
-	if err = dbConnect.Eloquent.Select([]string{"id"}).First(&user, id).Error; err != nil {
+	if err = DBConnect.Eloquent.Select([]string{"id"}).First(&user, id).Error; err != nil {
 		return
 	}
-	if err = dbConnect.Eloquent.Delete(&user).Error; err != nil {
+	if err = DBConnect.Eloquent.Delete(&user).Error; err != nil {
 		return
 	}
 	Result = *user

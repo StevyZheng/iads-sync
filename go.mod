@@ -12,6 +12,7 @@ require (
 	github.com/casbin/gorm-adapter v0.0.0-20190318080705-e74a050c51a4
 	github.com/chfenger/goNum v0.0.0-20190530013633-17a6c6a4dae0
 	github.com/denisenkom/go-mssqldb v0.0.0-20190515213511-eb9f6a1743f3 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/docker/distribution v2.7.1+incompatible // indirect
 	github.com/docker/docker v1.13.1
 	github.com/docker/go-connections v0.4.0 // indirect
