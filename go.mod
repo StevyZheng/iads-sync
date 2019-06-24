@@ -9,7 +9,6 @@ require (
 	github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc
 	github.com/appleboy/gin-jwt v2.6.0+incompatible
 	github.com/casbin/casbin v1.8.2
-	github.com/casbin/gorm-adapter v0.0.0-20190318080705-e74a050c51a4
 	github.com/chfenger/goNum v0.0.0-20190530013633-17a6c6a4dae0
 	github.com/denisenkom/go-mssqldb v0.0.0-20190515213511-eb9f6a1743f3 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
@@ -22,7 +21,6 @@ require (
 	github.com/emirpasic/gods v1.12.0
 	github.com/gin-contrib/sessions v0.0.0-20190512062852-3cb4c4f2d615
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/gin-gonic/contrib v0.0.0-20190526021735-7fb7810ed2a0
 	github.com/gin-gonic/gin v1.4.0
 	github.com/go-ole/go-ole v1.2.4 // indirect
 	github.com/go-openapi/spec v0.19.0 // indirect
@@ -37,6 +35,7 @@ require (
 	github.com/imdario/mergo v0.3.7 // indirect
 	github.com/jinzhu/gorm v1.9.8
 	github.com/jinzhu/inflection v0.0.0-20190603042836-f5c5f50e6090 // indirect
+	github.com/json-iterator/go v1.1.6
 	github.com/kr/fs v0.1.0 // indirect
 	github.com/lib/pq v1.1.1 // indirect
 	github.com/mailru/easyjson v0.0.0-20190403194419-1ea4449da983 // indirect
@@ -46,8 +45,10 @@ require (
 	github.com/olebedev/config v0.0.0-20190528211619-364964f3a8e4
 	github.com/opencontainers/go-digest v1.0.0-rc1 // indirect
 	github.com/pierrec/lz4 v2.2.3+incompatible // indirect
+	github.com/pkg/errors v0.8.1
 	github.com/pkg/sftp v1.10.0
 	github.com/shirou/gopsutil v2.18.12+incompatible
+	github.com/sirupsen/logrus v1.4.2
 	github.com/smartystreets/assertions v1.0.0 // indirect
 	github.com/smartystreets/goconvey v0.0.0-20190330032615-68dc04aab96a // indirect
 	github.com/spf13/cobra v0.0.4
