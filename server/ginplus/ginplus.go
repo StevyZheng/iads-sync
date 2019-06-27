@@ -3,12 +3,15 @@ package ginplus
 import (
 	"context"
 	"fmt"
+	"net/http"
+	"strings"
+
+	icontext "context"
 	"github.com/gin-gonic/gin"
 	"iads/server/pkg/errors"
 	"iads/server/pkg/logger"
 	"iads/server/pkg/util"
 	"iads/server/schema"
-	"strings"
 )
 
 // 定义上下文中的键
@@ -157,6 +160,37 @@ func ResErrorWithStatus(c *gin.Context, err error, status int, code ...int) {
 	}
 
 	ResJSON(c, status, schema.HTTPError{Error: item})
+}
+
+// ResPage 响应分页数据
+func ResPage(c *gin.Context, v interface{}, pr *schema.PaginationResult) {
+	list := schema.HTTPList{
+		List: v,
+		Pagination: &schema.HTTPPagination{
+			Current:  GetPageIndex(c),
+			PageSize: GetPageSize(c),
+		},
+	}
+	if pr != nil {
+		list.Pagination.Total = pr.Total
+	}
+
+	ResSuccess(c, list)
+}
+
+// ResList 响应列表数据
+func ResList(c *gin.Context, v interface{}) {
+	ResSuccess(c, schema.HTTPList{List: v})
+}
+
+// ResOK 响应OK
+func ResOK(c *gin.Context) {
+	ResSuccess(c, schema.HTTPStatus{Status: "OK"})
+}
+
+// ResSuccess 响应成功
+func ResSuccess(c *gin.Context, v interface{}) {
+	ResJSON(c, http.StatusOK, v)
 }
 
 // ResJSON 响应JSON数据
