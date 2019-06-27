@@ -3,6 +3,7 @@ package ginadmin
 import (
 	"context"
 	"fmt"
+	"iads/server/routers/api/v1"
 	"net/http"
 	"time"
 
@@ -10,7 +11,6 @@ import (
 	"iads/server/config"
 	"iads/server/middleware"
 	"iads/server/pkg/logger"
-	"iads/server/routers/api"
 )
 
 // InitWeb 初始化web引擎
@@ -39,7 +39,7 @@ func InitWeb(ctx context.Context, obj *Object) *gin.Engine {
 	}
 
 	// 注册/api路由
-	api.RegisterRouter(app, obj.Bll, obj.Auth, obj.Enforcer)
+	v1.RegisterRouter(app, obj.Bll, obj.Auth, obj.Enforcer)
 
 	// swagger文档
 	if dir := cfg.Swagger; dir != "" {

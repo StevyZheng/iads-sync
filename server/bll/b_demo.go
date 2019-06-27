@@ -3,10 +3,10 @@ package bll
 import (
 	"context"
 
-	"github.com/LyricTian/gin-admin/internal/app/ginadmin/model"
-	"github.com/LyricTian/gin-admin/internal/app/ginadmin/schema"
-	"github.com/LyricTian/gin-admin/pkg/errors"
-	"github.com/LyricTian/gin-admin/pkg/util"
+	"iads/server/model"
+	"iads/server/pkg/errors"
+	"iads/server/pkg/util"
+	"iads/server/schema"
 )
 
 // NewDemo 创建demo

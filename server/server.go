@@ -1,26 +1,59 @@
 package server
 
 import (
-	"fmt"
+	"context"
 	"github.com/gin-gonic/gin"
+	"github.com/google/gops/agent"
 	"iads/server/config"
-	"iads/server/routers"
-	"net/http"
+	"iads/server/pkg/logger"
 	"runtime"
+
+	. "iads/server/init"
 )
 
-func ServerStart() {
+func ServerStart(ctx context.Context) func() {
 	cfg := config.GetGlobalConfig()
 	runtime.GOMAXPROCS(cfg.AppMaxProc)
 	gin.SetMode(cfg.GinMode)
-	router := routers.InitRouter()
 
-	ser := &http.Server{
-		Addr:           fmt.Sprintf(":%d", 80),
-		Handler:        router,
-		ReadTimeout:    cfg.HttpServerReadTimeout,
-		WriteTimeout:   cfg.HttpServerWriteTimeout,
-		MaxHeaderBytes: cfg.HttpServerMaxHeaderBytes,
+	loggerCall, err := InitLogger()
+	if err != nil {
+		panic(err)
 	}
-	_ = ser.ListenAndServe()
+
+	if c := config.GetGlobalConfig().Monitor; c.Enable {
+		err = agent.Listen(agent.Options{Addr: c.Addr, ConfigDir: c.ConfigDir, ShutdownCleanup: true})
+		if err != nil {
+			logger.StartSpan(ctx, "开启[agent]服务监听", "ginadmin.Init").Errorf(err.Error())
+		}
+	}
+
+	InitCaptcha()
+
+	obj, objCall, err := InitObject(ctx)
+	if err != nil {
+		panic(err)
+	}
+
+	err = InitData(ctx, obj)
+	if err != nil {
+		logger.StartSpan(ctx, "初始化应用数据", "ginadmin.Init").Errorf(err.Error())
+	}
+
+	app := InitWeb(ctx, obj)
+	httpCall := InitHTTPServer(ctx, app)
+
+	return func() {
+		if httpCall != nil {
+			httpCall()
+		}
+
+		if objCall != nil {
+			objCall()
+		}
+
+		if loggerCall != nil {
+			loggerCall()
+		}
+	}
 }
