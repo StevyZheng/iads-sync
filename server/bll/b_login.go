@@ -3,9 +3,8 @@ package bll
 import (
 	"context"
 	"fmt"
-	"net/http"
-
-	"github.com/LyricTian/captcha"
+	//"github.com/LyricTian/captcha"
+	//"net/http"
 	"iads/server/model"
 	"iads/server/pkg/auth"
 	"iads/server/pkg/errors"
@@ -46,16 +45,16 @@ func (a *Login) getFuncName(name string) string {
 }
 
 // GetCaptchaID 获取图形验证码ID
-func (a *Login) GetCaptchaID(ctx context.Context, length int) (*schema.LoginCaptcha, error) {
+/*func (a *Login) GetCaptchaID(ctx context.Context, length int) (*schema.LoginCaptcha, error) {
 	captchaID := captcha.NewLen(length)
 	item := &schema.LoginCaptcha{
 		CaptchaID: captchaID,
 	}
 	return item, nil
-}
+}*/
 
 // ResCaptcha 生成图形验证码
-func (a *Login) ResCaptcha(ctx context.Context, w http.ResponseWriter, captchaID string, width, height int) error {
+/*func (a *Login) ResCaptcha(ctx context.Context, w http.ResponseWriter, captchaID string, width, height int) error {
 	err := captcha.WriteImage(w, captchaID, width, height)
 	if err != nil {
 		if err == captcha.ErrNotFound {
@@ -69,7 +68,7 @@ func (a *Login) ResCaptcha(ctx context.Context, w http.ResponseWriter, captchaID
 	w.Header().Set("Expires", "0")
 	w.Header().Set("Content-Type", "image/png")
 	return nil
-}
+}*/
 
 // GenerateToken 生成令牌
 func (a *Login) GenerateToken(ctx context.Context) (*schema.LoginTokenInfo, error) {

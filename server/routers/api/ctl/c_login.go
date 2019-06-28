@@ -3,10 +3,11 @@ package ctl
 import (
 	"fmt"
 
-	"github.com/LyricTian/captcha"
+	//"github.com/LyricTian/captcha"
+
+	//"github.com/LyricTian/captcha"
 	"github.com/gin-gonic/gin"
 	"iads/server/bll"
-	"iads/server/config"
 	"iads/server/ginplus"
 	"iads/server/pkg/errors"
 	"iads/server/pkg/logger"
@@ -35,14 +36,14 @@ func (a *Login) getFuncName(name string) string {
 // @Summary 获取验证码ID
 // @Success 200 schema.LoginCaptcha
 // @Router GET /api/v1/login/captchaid
-func (a *Login) GetCaptchaID(c *gin.Context) {
+/*func (a *Login) GetCaptchaID(c *gin.Context) {
 	item, err := a.LoginBll.GetCaptchaID(ginplus.NewContext(c), config.GetGlobalConfig().Captcha.Length)
 	if err != nil {
 		ginplus.ResError(c, err)
 		return
 	}
 	ginplus.ResSuccess(c, item)
-}
+}*/
 
 // GetCaptcha 获取图形验证码
 // @Summary 获取图形验证码
@@ -52,7 +53,7 @@ func (a *Login) GetCaptchaID(c *gin.Context) {
 // @Failure 400 schema.HTTPError "{error:{code:0,message:无效的请求参数}}"
 // @Failure 500 schema.HTTPError "{error:{code:0,message:服务器错误}}"
 // @Router GET /api/v1/login/captcha
-func (a *Login) GetCaptcha(c *gin.Context) {
+/*func (a *Login) GetCaptcha(c *gin.Context) {
 	captchaID := c.Query("id")
 	if captchaID == "" {
 		ginplus.ResError(c, errors.NewBadRequestError("无效的请求参数"))
@@ -71,7 +72,7 @@ func (a *Login) GetCaptcha(c *gin.Context) {
 	if err != nil {
 		ginplus.ResError(c, err)
 	}
-}
+}*/
 
 // Login 用户登录
 // @Summary 用户登录
@@ -87,10 +88,10 @@ func (a *Login) Login(c *gin.Context) {
 		return
 	}
 
-	if !captcha.VerifyString(item.CaptchaID, item.CaptchaCode) {
+	/*if !captcha.VerifyString(item.CaptchaID, item.CaptchaCode) {
 		ginplus.ResError(c, errors.NewBadRequestError("无效的验证码"))
 		return
-	}
+	}*/
 
 	user, err := a.LoginBll.Verify(ginplus.NewContext(c), item.UserName, item.Password)
 	if err != nil {

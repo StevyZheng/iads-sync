@@ -7,7 +7,7 @@ import (
 	"iads/server/pkg/auth"
 )
 
-const defaultKey = "GINADMIN"
+const defaultKey = "IADS"
 
 var defaultOptions = options{
 	tokenType:     "Bearer",

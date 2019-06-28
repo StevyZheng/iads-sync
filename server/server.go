@@ -28,7 +28,7 @@ func ServerStart(ctx context.Context) func() {
 		}
 	}
 
-	InitCaptcha()
+	//InitCaptcha()
 
 	obj, objCall, err := InitObject(ctx)
 	if err != nil {

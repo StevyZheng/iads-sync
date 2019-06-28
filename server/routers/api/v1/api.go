@@ -46,8 +46,8 @@ func RegisterRouter(app *gin.Engine, b *bll.Common, a auth.Auther, enforcer *cas
 	v1 := g.Group("/v1")
 	{
 		// 注册/api/v1/login
-		v1.GET("/login/captchaid", loginCtl.GetCaptchaID)
-		v1.GET("/login/captcha", loginCtl.GetCaptcha)
+		//v1.GET("/login/captchaid", loginCtl.GetCaptchaID)
+		//v1.GET("/login/captcha", loginCtl.GetCaptcha)
 		v1.POST("/login", loginCtl.Login)
 		v1.POST("/login/exit", loginCtl.Logout)
 
