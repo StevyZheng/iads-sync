@@ -6,9 +6,9 @@ import (
 )
 
 func TestStore(t *testing.T) {
-	a := Config{"localhost:6379", 0, "", ""}
+	a := Config{"127.0.0.1:6379", 0, "", ""}
 	s := NewStore(&a)
-	e := s.Set("hahaha1", time.Second*33)
+	e := s.Set("hahaha", time.Second*33)
 	if e != nil {
 		println(e.Error())
 	}

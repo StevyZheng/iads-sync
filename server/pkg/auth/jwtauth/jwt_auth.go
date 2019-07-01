@@ -83,7 +83,6 @@ type JWTAuth struct {
 func (a *JWTAuth) GenerateToken(userID string) (auth.TokenInfo, error) {
 	now := time.Now()
 	expiresAt := now.Add(time.Duration(a.opts.expired) * time.Second).Unix()
-
 	token := jwt.NewWithClaims(a.opts.signingMethod, &jwt.StandardClaims{
 		IssuedAt:  now.Unix(),
 		ExpiresAt: expiresAt,
